@@ -31,11 +31,6 @@ public class NetworkManager implements Runnable {
         errorPlotter = plotter;
         endResultProcessor = resultProcessor;
     }
-    
-    public List<DataContainer> loadData(DataInterpreter interpreter, File dataFile) {
-        DataLoader loader = new DataLoader();
-        return loader.loadData(dataFile, interpreter);
-    }
 
     @Override
     public void run() {
@@ -45,5 +40,10 @@ public class NetworkManager implements Runnable {
         network.trainNetwork(learnData, testData, errorPlotter,
                 networkConfig.epochLimit, networkConfig.errorLimit);
         endResultProcessor.processResults(network);
+    }
+    
+    private List<DataContainer> loadData(DataInterpreter interpreter, File dataFile) {
+        DataLoader loader = new DataLoader();
+        return loader.loadData(dataFile, interpreter);
     }
 }

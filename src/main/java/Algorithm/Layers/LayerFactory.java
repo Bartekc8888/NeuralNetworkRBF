@@ -8,6 +8,13 @@ public class LayerFactory {
     }
     
     public static NeuralLayer createLayer(NeuralLayerProperties properties) {
-        return null;
+        switch (properties.getLayerType()) {
+        case Gaussian:
+            return new GaussianLayer(properties);
+        case Linear:
+            return new LinearLayer(properties);
+        default:
+            return null;
+        }
     }
 }

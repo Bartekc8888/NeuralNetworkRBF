@@ -73,14 +73,16 @@ public class NeuralNetwork {
                 System.out.println("trainErr: " + errorAfterEpoch + " testErr: " + errorOnTest);
                 
                 errorPlotter.newErrorData(errorAfterEpoch, errorOnTest);
-            }
-            
-            if (errorAfterEpoch < errorLimit) {
-                return;
+                
+                if (errorAfterEpoch < errorLimit) {
+                    return;
+                }
             }
 
             for (int i = 0; i < correctionsAccumulator.length; i++) {
-                correctionsAccumulator[i] = correctionsAccumulator[i].scalarMultiply(1.d / dataCopy.size());
+                if (correctionsAccumulator[i] != null) {
+                    correctionsAccumulator[i] = correctionsAccumulator[i].scalarMultiply(1.d / dataCopy.size());
+                }
             }
 
             applyCorrections(correctionsAccumulator);

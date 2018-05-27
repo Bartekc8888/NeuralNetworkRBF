@@ -1,5 +1,6 @@
 package Algorithm.Layers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -8,6 +9,7 @@ import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
+import Algorithm.NeuralGasSelector;
 import NetworkUtilities.ActivationFunction.RadialActivationFunction;
 import NetworkUtilities.Configuration.NeuralLayerProperties;
 import NetworkUtilities.Data.DataContainer;
@@ -25,14 +27,19 @@ public class GaussianLayer implements NeuralLayer {
     
     @Override
     public RealVector calculateOutputValue(RealVector inputValues) {
-        RealVector output = centers.preMultiply(inputValues);
-        output.ebeMultiply(coefficients);
+        RealMatrix matrixInputValues = new Array2DRowRealMatrix(inputValues.toArray());
+        RealVector output = centers.multiply(matrixInputValues).getColumnVector(0);
+        output = output.ebeMultiply(coefficients);
         
         return output;
     }
 
     @Override
     public RealMatrix calculateCorrections(RealVector input, RealVector errors) {
+        if (!layerProperties.isBackpropagationUsed()) {
+            return null;
+        }
+        
         RadialActivationFunction activationFunction = layerProperties.getRadialActivationFunction();
         RealVector deriativeValues = activationFunction.derivativeValue(input, centers, coefficients);
 
@@ -57,6 +64,10 @@ public class GaussianLayer implements NeuralLayer {
 
     @Override
     public void applyCorrection(RealMatrix corrections) {
+        if (!layerProperties.isBackpropagationUsed()) {
+            return;
+        }
+        
         corrections = corrections.scalarMultiply((layerProperties.getLearningRate()) * (1 - layerProperties.getInertia()));
         RealVector coefficientChanges = corrections.getRowVector(0);
         if (previousCoefficientsChange != null) {
@@ -89,13 +100,19 @@ public class GaussianLayer implements NeuralLayer {
     private void initRandomCenters(List<DataContainer> trainingData) {
         Random rand = new Random();
         for (int i = 0; i < layerProperties.getNeuronCount(); i++) {
-            int randomIndex = rand.nextInt() % layerProperties.getNeuronCount();
-            centers.setColumnVector(i, trainingData.get(randomIndex).getData());
+            int randomIndex = (rand.nextInt() & 0x0ffffff) % trainingData.size();
+            centers.setRowVector(i, trainingData.get(randomIndex).getData());
         }
     }
     
     private void initCentersByNeuralGas(List<DataContainer> trainingData) {
+        List<RealVector> dataPoints = new ArrayList<RealVector>();
+        for (DataContainer container : trainingData) {
+            dataPoints.add(container.getData());
+        }
         
+        NeuralGasSelector selector = new NeuralGasSelector(dataPoints, layerProperties.getNeuronCount(), 300, 30, 0.8);
+        centers = selector.getSelectedCenters();
     }
     
     private void initCoefficients() {

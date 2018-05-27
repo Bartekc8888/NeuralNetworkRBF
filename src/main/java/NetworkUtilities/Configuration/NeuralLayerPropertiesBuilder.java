@@ -45,14 +45,17 @@ public class NeuralLayerPropertiesBuilder {
         this.layerType = layerType;
         return this;
     }
-    public void setRadialActivationFunction(RadialActivationFunction radialActivationFunction) {
+    public NeuralLayerPropertiesBuilder setRadialActivationFunction(RadialActivationFunction radialActivationFunction) {
         this.radialActivationFunction = radialActivationFunction;
+        return this;
     }
-    public void setBackpropagationUsed(boolean isBackpropagationUsed) {
+    public NeuralLayerPropertiesBuilder setBackpropagationUsed(boolean isBackpropagationUsed) {
         this.isBackpropagationUsed = isBackpropagationUsed;
+        return this;
     }
-    public void setCenterSelectorType(CenterSelectorType centerSelectorType) {
+    public NeuralLayerPropertiesBuilder setCenterSelectorType(CenterSelectorType centerSelectorType) {
         this.centerSelectorType = centerSelectorType;
+        return this;
     }
     
     public NeuralLayerProperties build() {
