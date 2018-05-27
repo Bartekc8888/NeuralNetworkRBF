@@ -1,5 +1,6 @@
 package NetworkUtilities.Configuration;
 
+import Algorithm.Layers.LayerFactory.LayerType;
 import NetworkUtilities.ActivationFunction.ActivationFunction;
 
 public class NeuralLayerProperties {
@@ -9,15 +10,16 @@ public class NeuralLayerProperties {
 	private double inertialInfluence;
 	private boolean isBiasUsed;
     private ActivationFunction activationFunction;
+    private LayerType layerType;
 	
-	public NeuralLayerProperties(int numberOfInputs, int numberOfNeurons, double learningRate, 
-	                            double inertia, boolean biasUsage, ActivationFunction function) {
-		inputCount = numberOfInputs;
-		neuronCount = numberOfNeurons;
-		this.learningRate = learningRate;
-		inertialInfluence = inertia;
-		activationFunction = function;
-		isBiasUsed = biasUsage;
+	public NeuralLayerProperties(NeuralLayerPropertiesBuilder builder) {
+		inputCount = builder.inputCount;
+		neuronCount = builder.neuronCount;
+		learningRate = builder.learningRate;
+		inertialInfluence = builder.inertialInfluence;
+		activationFunction = builder.activationFunction;
+		isBiasUsed = builder.isBiasUsed;
+		layerType = builder.layerType;
 	}
 
 	public int getInputCount() {
@@ -47,5 +49,9 @@ public class NeuralLayerProperties {
 	public ActivationFunction getActivationFunction() {
 		return activationFunction;
 	}
+
+    public LayerType getLayerType() {
+        return layerType;
+    }
 	
 }

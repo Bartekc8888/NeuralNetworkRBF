@@ -5,8 +5,8 @@ import java.io.File;
 import NetworkUtilities.Data.DataInterpreter;
 
 public class NetworkConfiguration {
-    public File trainingPath;
-    public File testingPath;
+    public File trainingFile;
+    public File testingFile;
     
     public NeuralLayerProperties[] networkProperties;
     
