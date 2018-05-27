@@ -42,7 +42,8 @@ public class NetworkManager implements Runnable {
         List<DataContainer> learnData = loadData(networkConfig.interpreter, networkConfig.trainingFile);
         List<DataContainer> testData = loadData(networkConfig.interpreter, networkConfig.testingFile);
         
-        network.trainNetwork(learnData, testData, errorPlotter);
+        network.trainNetwork(learnData, testData, errorPlotter,
+                networkConfig.epochLimit, networkConfig.errorLimit);
         endResultProcessor.processResults(network);
     }
 }

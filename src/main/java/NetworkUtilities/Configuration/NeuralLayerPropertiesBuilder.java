@@ -1,7 +1,9 @@
 package NetworkUtilities.Configuration;
 
+import Algorithm.CenterSelectorType;
 import Algorithm.Layers.LayerFactory.LayerType;
 import NetworkUtilities.ActivationFunction.ActivationFunction;
+import NetworkUtilities.ActivationFunction.RadialActivationFunction;
 
 public class NeuralLayerPropertiesBuilder {
     public int inputCount;
@@ -11,6 +13,9 @@ public class NeuralLayerPropertiesBuilder {
     public boolean isBiasUsed;
     public ActivationFunction activationFunction;
     public LayerType layerType;
+    public RadialActivationFunction radialActivationFunction;
+    public boolean isBackpropagationUsed;
+    public CenterSelectorType centerSelectorType;
     
     public NeuralLayerPropertiesBuilder setInputCount(int inputCount) {
         this.inputCount = inputCount;
@@ -39,6 +44,15 @@ public class NeuralLayerPropertiesBuilder {
     public NeuralLayerPropertiesBuilder setLayerType(LayerType layerType) {
         this.layerType = layerType;
         return this;
+    }
+    public void setRadialActivationFunction(RadialActivationFunction radialActivationFunction) {
+        this.radialActivationFunction = radialActivationFunction;
+    }
+    public void setBackpropagationUsed(boolean isBackpropagationUsed) {
+        this.isBackpropagationUsed = isBackpropagationUsed;
+    }
+    public void setCenterSelectorType(CenterSelectorType centerSelectorType) {
+        this.centerSelectorType = centerSelectorType;
     }
     
     public NeuralLayerProperties build() {

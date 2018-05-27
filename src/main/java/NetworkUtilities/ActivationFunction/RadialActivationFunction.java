@@ -5,22 +5,24 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
 public interface RadialActivationFunction {
-    public double functionValue(RealVector input);
-    public default RealVector functionValue(RealMatrix input) {
-        RealVector resultVector = new ArrayRealVector(input.getRowDimension());
+    public double functionValue(RealVector input, RealVector center, double coefficient);
+    public default RealVector functionValue(RealVector input, RealMatrix centers, RealVector coefficients) {
+        RealVector resultVector = new ArrayRealVector(input.getDimension());
         
         for (int i = 0; i < resultVector.getDimension(); i++) {
-            resultVector.setEntry(i, functionValue(input.getRowVector(i)));
+            double functionValue = functionValue(input, centers.getRowVector(i), coefficients.getEntry(i));
+            resultVector.setEntry(i, functionValue);
         }
         return resultVector;
     }
     
-    public double derivativeValue(RealVector input);
-    public default RealVector derivativeValue(RealMatrix input) {
-        RealVector resultVector = new ArrayRealVector(input.getRowDimension());
+    public double derivativeValue(RealVector input, RealVector center, double coefficient);
+    public default RealVector derivativeValue(RealVector input, RealMatrix centers, RealVector coefficients) {
+        RealVector resultVector = new ArrayRealVector(input.getDimension());
         
         for (int i = 0; i < resultVector.getDimension(); i++) {
-            resultVector.setEntry(i, derivativeValue(input.getRowVector(i)));
+            double derivative = derivativeValue(input, centers.getRowVector(i), coefficients.getEntry(i));
+            resultVector.setEntry(i, derivative);
         }
         return resultVector;
     }

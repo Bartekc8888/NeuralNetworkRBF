@@ -1,7 +1,11 @@
 package Algorithm.Layers;
 
+import java.util.List;
+
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
+
+import NetworkUtilities.Data.DataContainer;
 
 public interface NeuralLayer {
     public RealVector calculateOutputValue(RealVector inputValues);
@@ -10,6 +14,5 @@ public interface NeuralLayer {
     
     public RealVector calculateErrorsForPreviousLayer(RealVector errors);
     
-    public RealMatrix getWeights();
-    public void setWeights(RealMatrix parameters);
+    public void initLayer(List<DataContainer> trainingData);
 }
