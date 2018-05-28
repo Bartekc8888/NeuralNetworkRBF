@@ -29,7 +29,7 @@ public class MainApp {
         NeuralLayerProperties[] properties = new NeuralLayerProperties[2];
         
         NeuralLayerPropertiesBuilder builder = new NeuralLayerPropertiesBuilder();
-        builder.setNeuronCount(5)
+        builder.setNeuronCount(10)
         .setRadialActivationFunction(new GaussianFunction())
         .setBackpropagationUsed(false)
         .setCenterSelectorType(CenterSelectorType.Random)
@@ -43,7 +43,8 @@ public class MainApp {
         builder.setActivationFunction(new LinearFunction())
         .setLayerType(LayerType.Linear)
         .setNeuronCount(1)
-        .setInputCount(5)
+        .setBiasUsed(true)
+        .setInputCount(10)
         .setBackpropagationUsed(true);
         
         properties[1] = builder.build();
@@ -53,7 +54,7 @@ public class MainApp {
     
     public static NetworkConfiguration getConfigurationOfTask1() {
         NetworkConfiguration configuration = new NetworkConfiguration();
-        configuration.epochLimit = 300;
+        configuration.epochLimit = 5000;
         configuration.errorLimit = 0.05;
         configuration.interpreter = new ApproximationInterpreter();
         configuration.networkProperties = getPropertiesOfTask1();

@@ -27,9 +27,7 @@ public class GaussianLayer implements NeuralLayer {
     
     @Override
     public RealVector calculateOutputValue(RealVector inputValues) {
-        RealMatrix matrixInputValues = new Array2DRowRealMatrix(inputValues.toArray());
-        RealVector output = centers.multiply(matrixInputValues).getColumnVector(0);
-        output = output.ebeMultiply(coefficients);
+        RealVector output = layerProperties.getRadialActivationFunction().functionValue(inputValues, centers, coefficients);
         
         return output;
     }

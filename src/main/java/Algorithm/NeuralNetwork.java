@@ -70,7 +70,7 @@ public class NeuralNetwork {
                 errorAfterEpoch = errorAccumulator / dataCopy.size(); // divide to get average error on all samples
                 Double errorOnTest = calculateErrorOverDataRange(testData);
                 
-                System.out.println("trainErr: " + errorAfterEpoch + " testErr: " + errorOnTest);
+                System.out.println("Epoch: " + currentEpoch + "trainErr: " + errorAfterEpoch + " testErr: " + errorOnTest);
                 
                 errorPlotter.newErrorData(errorAfterEpoch, errorOnTest);
                 
