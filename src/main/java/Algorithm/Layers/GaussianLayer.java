@@ -18,6 +18,8 @@ public class GaussianLayer implements NeuralLayer {
     private NeuralLayerProperties layerProperties;
     private RealMatrix centers;
     private RealVector coefficients;
+    
+    private RealMatrix previousCentersChange;
     private RealVector previousCoefficientsChange;
     
     public GaussianLayer(NeuralLayerProperties properties) {
@@ -40,7 +42,8 @@ public class GaussianLayer implements NeuralLayer {
         
         RadialActivationFunction activationFunction = layerProperties.getRadialActivationFunction();
         RealVector deriativeValues = activationFunction.derivativeValue(input, centers, coefficients);
-
+        RealVector output = layerProperties.getRadialActivationFunction().functionValue(input, centers, coefficients);
+        
         RealMatrix corrections = new Array2DRowRealMatrix(layerProperties.getNeuronCount(),
                                                           layerProperties.getInputCount() + 1);
         
@@ -48,13 +51,28 @@ public class GaussianLayer implements NeuralLayer {
                                                                     layerProperties.getInputCount());
         
         for (int i = 0; i < layerProperties.getNeuronCount(); i++) {
-            RealVector rowOfCorrections = input.mapMultiply(deriativeValues.getEntry(i)).mapMultiply(errors.getEntry(i));
-
+            double coefficiency = coefficients.getEntry(i);
+            coefficiency = coefficiency * coefficiency;
+            
+            RealVector rowOfCorrections = input.subtract(centers.getRowVector(i)).mapDivide(coefficiency);
+            rowOfCorrections = rowOfCorrections.mapMultiply(2 * output.getEntry(i) * errors.getEntry(i));
+            
             correctionsForWeights.setRowVector(i, rowOfCorrections);
         }
         corrections.setSubMatrix(correctionsForWeights.getData(), 0, 0);
         
-        RealVector correctionsForBiases = deriativeValues.ebeMultiply(errors);
+        RealVector coefficiencyCorrections = new ArrayRealVector(layerProperties.getNeuronCount());
+        for (int i = 0; i < layerProperties.getNeuronCount(); i++) {
+            double distance = input.getDistance(centers.getRowVector(i));
+            distance = distance * distance;
+            
+            double coefficiency = coefficients.getEntry(i);
+            distance = distance / (coefficiency * coefficiency * coefficiency);
+            
+            coefficiencyCorrections.setEntry(i, distance);
+        }
+        
+        RealVector correctionsForBiases = output.ebeMultiply(errors).ebeMultiply(coefficiencyCorrections).mapMultiply(2);
         corrections.setColumnVector(layerProperties.getInputCount(), correctionsForBiases); // set bias correction in last column
 
         return corrections;
@@ -65,14 +83,24 @@ public class GaussianLayer implements NeuralLayer {
         if (!layerProperties.isBackpropagationUsed()) {
             return;
         }
-        
+
         corrections = corrections.scalarMultiply((layerProperties.getLearningRate()) * (1 - layerProperties.getInertia()));
-        RealVector coefficientChanges = corrections.getRowVector(0);
+        int inputCount = layerProperties.getInputCount();
+        
+        RealMatrix centerChanges = corrections.getSubMatrix(0, layerProperties.getNeuronCount() - 1, 0, inputCount - 1);
+        RealVector coefficientChanges = corrections.getColumnVector(inputCount);
+        
         if (previousCoefficientsChange != null) {
             coefficientChanges = coefficientChanges.add(previousCoefficientsChange.mapMultiply(layerProperties.getInertia()));
         }
+        if (previousCentersChange != null) {
+            centerChanges = centerChanges.add(previousCentersChange.scalarMultiply(layerProperties.getInertia()));
+        }
         
+        centers = centers.add(centerChanges);
         coefficients = coefficients.add(coefficientChanges);
+        
+        previousCentersChange = centerChanges;
         previousCoefficientsChange = coefficientChanges;
     }
 

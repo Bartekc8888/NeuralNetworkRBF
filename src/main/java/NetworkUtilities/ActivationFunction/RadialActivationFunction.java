@@ -18,7 +18,7 @@ public interface RadialActivationFunction {
     
     public double derivativeValue(RealVector input, RealVector center, double coefficient);
     public default RealVector derivativeValue(RealVector input, RealMatrix centers, RealVector coefficients) {
-        RealVector resultVector = new ArrayRealVector(input.getDimension());
+        RealVector resultVector = new ArrayRealVector(centers.getRowDimension());
         
         for (int i = 0; i < resultVector.getDimension(); i++) {
             double derivative = derivativeValue(input, centers.getRowVector(i), coefficients.getEntry(i));
