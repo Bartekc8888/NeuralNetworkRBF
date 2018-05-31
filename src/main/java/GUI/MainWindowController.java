@@ -8,8 +8,6 @@ import NetworkUtilities.Configuration.SettingsFromUserTransportObject;
 import NetworkUtilities.Configuration.SettingsType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;

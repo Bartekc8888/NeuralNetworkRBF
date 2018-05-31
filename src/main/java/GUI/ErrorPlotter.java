@@ -7,10 +7,10 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 
 public class ErrorPlotter{
     private Stage plotStage;
+    private boolean isClosed;
     
     private NumberAxis xAxis;
     private NumberAxis yAxis;
@@ -20,6 +20,7 @@ public class ErrorPlotter{
     
     public ErrorPlotter(int maxEpochCount) {
         plotStage = new Stage();
+        plotStage.setOnCloseRequest((event) -> onPlotClosing());
         
         xAxis = new NumberAxis();
         xAxis.setLabel("Liczba epok");
@@ -59,5 +60,13 @@ public class ErrorPlotter{
             trainSeries.getData().add(new Data<Number, Number>(epoch, trainError));
             testSeries.getData().add(new Data<Number, Number>(epoch, testError));
         });
+    }
+    
+    public boolean isClosed() {
+        return isClosed;
+    }
+    
+    private void onPlotClosing() {
+        isClosed = true;
     }
 }

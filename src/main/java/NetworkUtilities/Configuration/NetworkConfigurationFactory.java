@@ -15,7 +15,7 @@ public class NetworkConfigurationFactory {
                 settings.type == SettingsType.Type3a) {
             configuration.interpreter = new ApproximationInterpreter();
         } else {
-            configuration.interpreter = new ClassificationInterpreter(1);
+            configuration.interpreter = new ClassificationInterpreter(3);
         }
         configuration.networkProperties = NeuralLayerPropertiesFactory.createProperties(settings);
         configuration.trainingFile = new File(settings.trainingFile);

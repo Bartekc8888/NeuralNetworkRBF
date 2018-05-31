@@ -37,28 +37,13 @@ public class MainApp extends Application {
             NetworkConfiguration configuration = 
                     NetworkConfigurationFactory.createNetworkConfiguration(settings);
             
-            NetworkManager manager = new NetworkManager(configuration, new ErrorPlotter(settings.epochLimit),
-                    getProcessor(settings.type));
+            NetworkManager manager = new NetworkManager(configuration,
+                    new ErrorPlotter(settings.epochLimit), settings.type);
             
             Thread algorithmThread = new Thread(manager);
             algorithmThread.start();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-    
-    private static EndResultProcessor getProcessor(SettingsType type) {
-        switch (type) {
-        case Type1:
-        case Type3a:
-
-            return new AproximationEndResultProcessor();
-        case Type2:
-        case Type3b:
-
-            return new ClassificationEndResultProcessor();
-        default:
-            return null;
         }
     }
 

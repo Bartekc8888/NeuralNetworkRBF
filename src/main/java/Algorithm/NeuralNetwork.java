@@ -87,6 +87,10 @@ public class NeuralNetwork {
 
             applyCorrections(correctionsAccumulator);
             currentEpoch++;
+            
+            if (errorPlotter.isClosed()) {
+                cancel();
+            }
         }
 	}
 	
@@ -149,6 +153,10 @@ public class NeuralNetwork {
 	
 	public synchronized void cancel() {
 	    isCanceled = true;
+	}
+	
+	public boolean isCanceled() {
+	    return isCanceled;
 	}
 	
 	private RealVector getOutputOfLayer(RealVector input, int layerLevel) { // layerLevel counting from 1

@@ -72,6 +72,11 @@ public class NeuralLayerPropertiesFactory {
         .setBiasUsed(true)
         .setBackpropagationUsed(true);
         
+        if (settings.type == SettingsType.Type2 ||
+                settings.type == SettingsType.Type3b) {
+            builder.setNeuronCount(3);
+        }
+        
         return builder;
     }
 }
