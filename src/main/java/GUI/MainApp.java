@@ -2,20 +2,10 @@ package GUI;
 
 import java.net.URL;
 
-import Algorithm.CenterSelectorType;
 import Algorithm.NetworkManager;
-import Algorithm.Layers.LayerFactory.LayerType;
-import NetworkUtilities.AproximationEndResultProcessor;
-import NetworkUtilities.ClassificationEndResultProcessor;
-import NetworkUtilities.EndResultProcessor;
-import NetworkUtilities.ActivationFunction.GaussianFunction;
-import NetworkUtilities.ActivationFunction.LinearFunction;
 import NetworkUtilities.Configuration.NetworkConfiguration;
 import NetworkUtilities.Configuration.NetworkConfigurationFactory;
-import NetworkUtilities.Configuration.NeuralLayerProperties;
-import NetworkUtilities.Configuration.NeuralLayerPropertiesBuilder;
 import NetworkUtilities.Configuration.SettingsFromUserTransportObject;
-import NetworkUtilities.Configuration.SettingsType;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,9 +15,6 @@ import javafx.stage.Stage;
 public class MainApp extends Application {
     private static final String mainWindowFXML = "SettingsWindow.fxml";
     
-    private MainWindowController mainWindowController;
-    private Stage primaryStage;
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -54,9 +41,8 @@ public class MainApp extends Application {
         Parent root = loader.load();
         Scene scene = new Scene(root);
         
-        mainWindowController = loader.getController();
+        loader.getController();
         
-        this.primaryStage = primaryStage;
         primaryStage.setTitle("Sieci RBF");
         primaryStage.setScene(scene);
         primaryStage.setMinWidth(450);

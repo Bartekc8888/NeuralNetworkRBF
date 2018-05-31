@@ -17,7 +17,6 @@ public class GaussianFunction implements RadialActivationFunction {
 
     @Override
     public double derivativeValue(RealVector input, RealVector center, double coefficient) {
-        // TODO check derivative equation correctness
         double derivativeParameter = 2 / (coefficient * coefficient);
         double result = derivativeParameter * functionValue(input, center, coefficient);
         

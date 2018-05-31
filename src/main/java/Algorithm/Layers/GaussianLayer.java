@@ -10,7 +10,6 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
 import Algorithm.NeuralGasSelector;
-import NetworkUtilities.ActivationFunction.RadialActivationFunction;
 import NetworkUtilities.Configuration.NeuralLayerProperties;
 import NetworkUtilities.Data.DataContainer;
 
@@ -40,8 +39,6 @@ public class GaussianLayer implements NeuralLayer {
             return null;
         }
         
-        RadialActivationFunction activationFunction = layerProperties.getRadialActivationFunction();
-        RealVector deriativeValues = activationFunction.derivativeValue(input, centers, coefficients);
         RealVector output = layerProperties.getRadialActivationFunction().functionValue(input, centers, coefficients);
         
         RealMatrix corrections = new Array2DRowRealMatrix(layerProperties.getNeuronCount(),
@@ -125,18 +122,6 @@ public class GaussianLayer implements NeuralLayer {
         initCoefficients();
     }
     
-    private void initRandomCenters() {
-        Random rand = new Random();
-        for (int i = 0; i < layerProperties.getNeuronCount(); i++) {
-            RealVector centerPosition = new ArrayRealVector(layerProperties.getInputCount());
-            for (int j = 0; j < layerProperties.getInputCount(); j++) {
-                centerPosition.setEntry(j, rand.nextDouble());
-            }
-            
-            centers.setRowVector(i, centerPosition);
-        }
-    }
-    
     private void initRandomCentersByInput(List<DataContainer> trainingData) {
         Random rand = new Random();
         for (int i = 0; i < layerProperties.getNeuronCount(); i++) {
@@ -163,18 +148,6 @@ public class GaussianLayer implements NeuralLayer {
                 double distance = centers.getRowVector(i).getDistance(centers.getRowVector(j));
                 distances.setEntry(i, distance + distances.getEntry(i));
             }
-        }
-        
-        distances.mapDivideToSelf(centers.getRowDimension());
-        coefficients = distances;
-    }
-    
-    private void initRandomCoefficients() {
-        Random rand = new Random();
-        RealVector distances = new ArrayRealVector(centers.getRowDimension());
-        
-        for (int i = 0; i < distances.getDimension(); i++) {
-            distances.setEntry(i, rand.nextDouble());
         }
         
         distances.mapDivideToSelf(centers.getRowDimension());
