@@ -37,7 +37,7 @@ public class MainApp extends Application {
             NetworkConfiguration configuration = 
                     NetworkConfigurationFactory.createNetworkConfiguration(settings);
             
-            NetworkManager manager = new NetworkManager(configuration, new ErrorPlotter(),
+            NetworkManager manager = new NetworkManager(configuration, new ErrorPlotter(settings.epochLimit),
                     getProcessor(settings.type));
             
             Thread algorithmThread = new Thread(manager);

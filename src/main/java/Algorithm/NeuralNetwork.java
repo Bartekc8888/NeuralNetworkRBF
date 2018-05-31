@@ -72,7 +72,7 @@ public class NeuralNetwork {
                 
                 System.out.println("Epoch: " + currentEpoch + "trainErr: " + errorAfterEpoch + " testErr: " + errorOnTest);
                 
-                errorPlotter.newErrorData(errorAfterEpoch, errorOnTest);
+                errorPlotter.newErrorData(currentEpoch + 1, errorAfterEpoch, errorOnTest);
                 
                 if (errorAfterEpoch < errorLimit) {
                     return;
