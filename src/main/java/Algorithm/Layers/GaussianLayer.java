@@ -115,15 +115,29 @@ public class GaussianLayer implements NeuralLayer {
         case NeuralGas:
             initCentersByNeuralGas(trainingData);
             break;
+        case Backpropagation:
         case Random:
         default:
-            initRandomCenters(trainingData);
+            initRandomCentersByInput(trainingData);
             break;
         }
+        
         initCoefficients();
     }
     
-    private void initRandomCenters(List<DataContainer> trainingData) {
+    private void initRandomCenters() {
+        Random rand = new Random();
+        for (int i = 0; i < layerProperties.getNeuronCount(); i++) {
+            RealVector centerPosition = new ArrayRealVector(layerProperties.getInputCount());
+            for (int j = 0; j < layerProperties.getInputCount(); j++) {
+                centerPosition.setEntry(j, rand.nextDouble());
+            }
+            
+            centers.setRowVector(i, centerPosition);
+        }
+    }
+    
+    private void initRandomCentersByInput(List<DataContainer> trainingData) {
         Random rand = new Random();
         for (int i = 0; i < layerProperties.getNeuronCount(); i++) {
             int randomIndex = (rand.nextInt() & 0x0ffffff) % trainingData.size();
@@ -149,6 +163,18 @@ public class GaussianLayer implements NeuralLayer {
                 double distance = centers.getRowVector(i).getDistance(centers.getRowVector(j));
                 distances.setEntry(i, distance + distances.getEntry(i));
             }
+        }
+        
+        distances.mapDivideToSelf(centers.getRowDimension());
+        coefficients = distances;
+    }
+    
+    private void initRandomCoefficients() {
+        Random rand = new Random();
+        RealVector distances = new ArrayRealVector(centers.getRowDimension());
+        
+        for (int i = 0; i < distances.getDimension(); i++) {
+            distances.setEntry(i, rand.nextDouble());
         }
         
         distances.mapDivideToSelf(centers.getRowDimension());

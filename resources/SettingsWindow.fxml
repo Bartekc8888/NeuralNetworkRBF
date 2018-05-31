@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="400.0" prefHeight="402.0" prefWidth="600.0" style="-fx-background-color: #e5eefd;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainWindowController">
+   <bottom>
+      <Button fx:id="startLearningButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Ucz sieć" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </BorderPane.margin>
+      </Button>
+   </bottom>
+   <padding>
+      <Insets left="5.0" right="5.0" />
+   </padding>
+   <center>
+      <VBox maxWidth="1.7976931348623157E308" minHeight="280.0" minWidth="400.0" prefHeight="320.0" prefWidth="590.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox minHeight="40.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label fx:id="settingsTypeLabel" prefHeight="30.0" prefWidth="150.0" style="-fx-font-weight: bold;" text="Wybierz zadanie" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="5.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ChoiceBox fx:id="settingsTypeCombobox" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+               </children>
+            </HBox>
+            <HBox minHeight="40.0" prefHeight="35.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label fx:id="neuronCountLabel" prefHeight="30.0" prefWidth="150.0" style="-fx-font-weight: bold;" text="Liczba neuronów">
+                     <HBox.margin>
+                        <Insets bottom="5.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Spinner fx:id="neuronCountSpinner" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Spinner>
+               </children>
+            </HBox>
+            <HBox minHeight="40.0" prefHeight="35.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label fx:id="learningRateLabel" prefHeight="30.0" prefWidth="150.0" style="-fx-font-weight: bold;" text="Współczynnik nauki">
+                     <HBox.margin>
+                        <Insets bottom="5.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Spinner fx:id="learningRateSpinner" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Spinner>
+               </children>
+            </HBox>
+            <HBox prefHeight="35.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label fx:id="inertiaLabel" prefHeight="30.0" prefWidth="150.0" style="-fx-font-weight: bold;" text="Momentum">
+                     <HBox.margin>
+                        <Insets bottom="5.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Spinner fx:id="inertiaSpinner" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Spinner>
+               </children>
+            </HBox>
+            <HBox prefHeight="35.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label fx:id="errorLimitLabel" prefHeight="30.0" prefWidth="150.0" style="-fx-font-weight: bold;" text="Limit błędu">
+                     <HBox.margin>
+                        <Insets bottom="5.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Spinner fx:id="errorLimitSpinner" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Spinner>
+               </children>
+            </HBox>
+            <HBox prefHeight="35.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label fx:id="epochLimitLabel" prefHeight="30.0" prefWidth="150.0" style="-fx-font-weight: bold;" text="Limit epok">
+                     <HBox.margin>
+                        <Insets bottom="5.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Spinner fx:id="epochLimitSpinner" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Spinner>
+               </children>
+            </HBox>
+            <HBox prefHeight="35.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label fx:id="trainingFilePathLabel" prefHeight="30.0" prefWidth="200.0" style="-fx-font-weight: bold;" text="Ścieżka pliku treningowego">
+                     <HBox.margin>
+                        <Insets bottom="5.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="trainingFilePathField" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="trainingFilePathButton" mnemonicParsing="false" text="...">
+                     <HBox.margin>
+                        <Insets left="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox prefHeight="35.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label fx:id="testFilePathLabel" prefHeight="30.0" prefWidth="200.0" style="-fx-font-weight: bold;" text="Ścieżka pliku testowego">
+                     <HBox.margin>
+                        <Insets bottom="5.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="testingFilePathField" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="testingFilePathButton" mnemonicParsing="false" text="...">
+                     <HBox.margin>
+                        <Insets left="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
